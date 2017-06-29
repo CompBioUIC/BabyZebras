@@ -3,8 +3,8 @@
 Login to pachy using your credentials. 
 On windows you can use putty, on Mac/Ubuntu/*nix you can use the default terminal to `SSH`.
 ## TMUX
-You use tmux to basically keep running something on the background. So that even after exiting the prompt (or even logging off a remote machine) you do not break a script.
-More about tmux on: https://en.wikipedia.org/wiki/Tmux
+You use tmux to basically keep running something on the background. So that even after exiting the prompt (or even logging off a remote machine) you do not break a script.  
+More about tmux on: https://en.wikipedia.org/wiki/Tmux  
 tmux cheat sheet : https://gist.github.com/MohamedAlaa/2961058
 
 Things we are going to use:
