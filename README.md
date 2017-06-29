@@ -22,10 +22,10 @@ Things we are going to use:
 * Login to pachy
 * Create a new TMUX session  
 `tmux new -s ibeis_5001`
-* Inside the tmux session, go to the directory where you want to create your instance. The preferred directory is `/home/shared_ibeis/data/work/`  
-`cd /home/shared_ibeis/data/work`  
-`mkdir BABYMOM`  
-`python2.7 /opt/ibeis/ibeis/dev.py --dbdir /home/shared_ibeis/data/work/BABYMOM/ --web --port 5001`  
+* Inside the tmux session, go to the directory where you want to create your instance. The preferred directory is ```/home/shared_ibeis/data/work/  
+cd /home/shared_ibeis/data/work    
+mkdir BABYMOM    
+python2.7 /opt/ibeis/ibeis/dev.py --dbdir /home/shared_ibeis/data/work/BABYMOM/ --web --port 5001```  
 *Any images you upload will now go inside the above directory.*
 
 
