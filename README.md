@@ -54,7 +54,31 @@ def __main__():
  	__main__()
 ```
 
+## Running detection - Recognizing bounding boxes and species of the animal in the bounding box
+UploadAndDetectIBEIS.py has the methods to run detection on the images that are uploaded to an instance running.  
+You can run these steps only when your upload step is complete.  
+Steps to trigger detection module:
+* Download UploadAndDetectIBEIS.py to your local computer and add the below code snippet to the code.
+```python
+def __main__():
+    gidList = [i for i in range(start_gid, end_gid+1)] 
+    detect = partial(run_detection_task)
 
+    with closing(Pool(processes=2)) as p:
+        p.map(detect, gidList)
+        p.terminate()
+        
+if __name__ == "__main__":
+    __main__()
+```
+*start_gid and end_gid specifies for what all gid's you want to run the detection for.*
+* Login to pachy 
+* Start a new tmux session 
+* Simply run 
+`python UploadAndDetectIBEIS.py`
+* Close the tmux session.
+* Exit pachy.
+* To check progress you can login back to pachy and attach to the tmux session you created. 
 
 ### Notes:
 * GID is nothing but the an ID assigned by the Wildbook to each individual image. A GID uniquely identifies an image. 
