@@ -31,7 +31,11 @@ python2.7 /opt/ibeis/ibeis/dev.py --dbdir /home/shared_ibeis/data/work/BABYMOM/ 
 *Any images you upload will now go inside the above directory.*
 After you execute the above steps a web instance is setup and you can access the web interface from https://pachy.cs.uic.edu:5001
 
+## Getting copy of a code to pachy:
 Clone this GIT repository to your machine and also your home directory on pachy. *Let the admin know if you are unable to clone.*  
+``git clone https://github.com/CompBioUIC/BabyZebras``  
+You can directly make changes to the code on pachy and run it from there. 
+
 
 ## Uploading images to pachy
 The script UploadAndDetectIBEIS.py has all the required methods to upload images to pachy. 
