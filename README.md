@@ -58,7 +58,51 @@ def __main__():
  	__main__()
 ```
 
+## Running detection - Recognizing bounding boxes and species of the animal in the bounding box
+UploadAndDetectIBEIS.py has the methods to run detection on the images that are uploaded to an instance running.  
+You can run these steps only when your upload step is complete.  
+Steps to trigger detection module:
+* Download UploadAndDetectIBEIS.py to your local computer and add the below code snippet to the code.
+```python
+def __main__():
+    gidList = [i for i in range(start_gid, end_gid+1)] 
+    detect = partial(run_detection_task)
 
+    with closing(Pool(processes=2)) as p:
+        p.map(detect, gidList)
+        p.terminate()
+        
+if __name__ == "__main__":
+    __main__()
+```
+*start_gid and end_gid specifies for what all gid's you want to run the detection for.*
+* Login to pachy 
+* Start a new tmux session 
+* Simply run 
+`python UploadAndDetectIBEIS.py`
+* Close the tmux session.
+* Exit pachy.
+* To check progress you can login back to pachy and attach to the tmux session you created. 
+
+
+## Running identification pipeline - Recognizing individuals across different images
+Identification pipeline unlike detection pipeline looks at annotations instead of images themselves. Each annotation is uniquely identified with a unique ID - AID. Each new annotation is matched against existing annotations in the database. (There is a little bit more to the logic - not every annotation but to the "exemplar" ones). We will do a cold start here since our database is empty.
+*We only specify end_gid and identification pipeline will run through gid 1 through end_gid*
+* Download UploadAndDetectIBEIS.py to your local computer and add the below code snippet to the code. (You should remove the above snippet(from detection) from the file before running)
+```python
+def __main__():
+    run_id_pipeline(end_gid, 'species for which you are running the detection') # zebra_plains, zebra_grevys, giraffe_reticulated etc. are some of the supported species. 
+        
+if __name__ == "__main__":
+    __main__()
+```
+* Login to pachy 
+* Start a new tmux session 
+* Simply run 
+`python UploadAndDetectIBEIS.py`
+* Close the tmux session.
+* Exit pachy.
+* To check progress you can login back to pachy and attach to the tmux session you created. 
 
 ### Notes:
 * GID is nothing but the an ID assigned by the Wildbook to each individual image. A GID uniquely identifies an image. 
