@@ -104,5 +104,58 @@ if __name__ == "__main__":
 * Exit pachy.
 * To check progress you can login back to pachy and attach to the tmux session you created. 
 
+
+## Deleting from the wildbook:
+### Deleting the images directly (will delete all the corresponding annotations and names):
+Like we did for image upload, you can open a fresh file, and insert the below code snippet. Assuming you have UploadAndDetectIBEIS.py in the same folder as your current working directory.
+
+```python
+def __main__():
+    data_dict = {'gid_list' : ["the list of gids you want to delete"]
+    try:
+        UD.delete("api/image", data_dict) # should return an exception if you try to delete an image which doesnt exist.
+    except Exception as e:
+        print("Image doesn't exist!")
+        print(e)
+        
+if __name__ == "__main__":
+    __main__()
+```
+
+### Deleting the annotations (will delete the corresponding names):
+Like we did for image upload, you can open a fresh file, and insert the below code snippet. Assuming you have UploadAndDetectIBEIS.py in the same folder as your current working directory. This step is helpful if you think there is something wrong with the detection and you would like to re-run it. IBEIS caches a lot of things, so re-running without deleting the annotation for a given image will most likely give you the exact same results. 
+
+```python
+def __main__():
+    data_dict = {'aid_list' : ["the list of annotations you want to delete"]
+    try:
+        UD.delete("api/annot", data_dict) # should return an exception if you try to delete an image which doesnt exist.
+    except Exception as e:
+        print("Annotations doesn't exist!")
+        print(e)
+        
+if __name__ == "__main__":
+    __main__()
+```
+
+### Deleting the names:
+Like we did for image upload, you can open a fresh file, and insert the below code snippet. Assuming you have UploadAndDetectIBEIS.py in the same folder as your current working directory. This step is helpful if you think there is something wrong with the identification and you would like to re-run it. During identification, a known issue is the system thinks its seeing the same animal again and again. You might want to delete the annotations that gets too many of such matches.
+
+```python
+def __main__():
+    data_dict = {'name_rowid_list' : ["the list of names (NIDs) you want to delete"]
+    try:
+        UD.delete("api/name", data_dict) # should return an exception if you try to delete an image which doesnt exist.
+    except Exception as e:
+        print("Names doesn't exist!")
+        print(e)
+        
+if __name__ == "__main__":
+    __main__()
+```
+
+
 ### Notes:
 * GID is nothing but the an ID assigned by the Wildbook to each individual image. A GID uniquely identifies an image. 
+* AID is the annotation ID. Every individual/bounding box is represented as an annotation.
+* NID is the name ID. Each uniquely identified individual is assigned a NID.
