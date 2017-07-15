@@ -66,3 +66,8 @@ if __name__ == "__main__":
   __main__()
 
 ```
+
+
+## Expected Errors
+The step of downloading is known to fail. We are using 2 processes to simulaneously download images and this can cause network congestion and the script might fail. 
+Due to its uncertainity, you might observe it every time you run or never. The best thing you can do is to scrape in small batches. For instance, instead of scraping from 50 pages at once, try first 10 and then move ahead. You might have to make changes to code accordingly. I will add this to my to-do list and see if there is a way to do smooth restarts in case of a failure. 
