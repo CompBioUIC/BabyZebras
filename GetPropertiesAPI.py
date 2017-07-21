@@ -90,6 +90,20 @@ ggr_annot_form_arg = lambda x : urllib.parse.quote('annot_uuid_list=') + '[{' + 
 ggr_image_form_arg = lambda x : urllib.parse.quote('image_uuid_list=') + '[{' + urllib.parse.quote('"__UUID__"') + ':' + urllib.parse.quote('\"%s\"' %x) + '}]'
 ggr_gid_form_arg = lambda x : urllib.parse.quote('gid_list=') + '[' + urllib.parse.quote('\"%s\"' %x)  + ']'
 
+
+# Arguments: One AID and then a list of AIDs
+# Returns: Similarity scores between the first AID and each AID in the list
+def simScore(qaid, daidL):
+    domain = 'http://131.193.42.62:5001'
+    data = {
+        'qaid_list' : '['+str(qaid)+']',
+        'daid_list' : str(daidL),
+    }
+    url = '%s/api/query/chip/dict/simple/' % (domain, )
+    resp = requests.get(url, data=data)
+    return resp.json()
+
+    
 def __main__():
     for i in range(1,2):
         print(getAnnotID(i))
