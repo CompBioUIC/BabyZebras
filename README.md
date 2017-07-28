@@ -1,4 +1,80 @@
-# BabyZebras Read Me
+# Scraping Basics
+This readme describes steps of scraping images from Flickr and Bing. 
+Please install the below dependencies by running the below command directly on your command line. 
+*Assuming you have installed `python 3.x`.*
+
+`pip install flickrapi`  
+`pip install urllib`
+
+## Using the config file
+The file `WebScrapeConfig.xml` has details on where the key file is stored etc. Below is a snippet of the XML file.  
+You have to change the parameters depending on where you store the key file, where you want the downloaded files to be stored etc. 
+
+Some comments have been added to the config directly to remind what the parameters mean. Similar parameters exist for `Bing` as well.
+
+```xml
+<flickr_config>
+    <flickr_api_key_file location="<specify where the flickr key (in JSON form) is stored"></flickr_api_key_file>
+    <flickr_download_dir dir="/tmp/"></flickr_download_dir> <!-- directory where you want to store your downloaded images-->
+</flickr_config>
+```
+
+To start, simply clone this branch using the below command and switch to this current branch. 
+```
+git clone https://github.com/CompBioUIC/BabyZebras.git
+git checkout scraping_branch
+```
+
+## Scraping images from Flickr
+Open a new file in any text editor and save it as `<filename of your choice>.py` and add the below code snippet. 
+
+```python
+import SocialMediaImageExtracts as SE
+
+def __main__():
+  SE.scrape_flickr(10, "links.dat", ["grevy's zebra"]) 
+  '''
+    This step will scrape the first 10 pages of Flickr when you search using the query "grevy's zebra" 
+    And then store the URLs of all those images appearing in these 10 pages to output.dat
+  '''
+  
+  SE.download_imgs("links.dat") #this step simply downloads every link in the links.dat file
+  
+
+if __name__ == "__main__":
+  __main__()
+
+```
+
+## Scraping images from Bing
+Similar to what we did for Flickr scrapes, a file with name of your choice and paste the below snippet. 
+```python
+import SocialMediaImageExtracts as SE
+
+def __main__():
+  SE.bing_search_pipeline("grevy's zebra", 10)
+  '''
+    This step will scrape the first 10 pages of Bing when you search using the query "grevy's zebra" 
+    And then also downloads all the images found in the first 10 pages to the download directory you specified in the config file
+    
+    This script will also generate a bunch of exif files in json form 
+    (typically, width & height of the image and when the image was published)
+    Look at the DataStructsHelperAPI.py file for help in combining these JSONs into 1 big file. 
+  '''
+
+if __name__ == "__main__":
+  __main__()
+
+```
+
+
+## Expected Errors
+The step of downloading is known to fail. We are using 2 processes to simulaneously download images and this can cause network congestion and the script might fail. 
+Due to its uncertainity, you might observe it every time you run or never. The best thing you can do is to scrape in small batches. For instance, instead of scraping from 50 pages at once, try first 10 and then move ahead. You might have to make changes to code accordingly. I will add this to my to-do list and see if there is a way to do smooth restarts in case of a failure. 
+
+
+
+# Creating a wildbook instance
 
 Login to pachy using your credentials. 
 On windows you can use putty, on Mac/Ubuntu/*nix you can use the default terminal to `SSH`.
@@ -26,14 +102,15 @@ Things we are going to use:
 ```bash
 cd /home/shared_ibeis/data/work    
 mkdir BABYMOM    
-python2.7 /opt/ibeis/ibeis/dev.py --dbdir /home/shared_ibeis/data/work/BABYMOM/ --web --port 5001
+python2.7 /opt/ibeis/ibeis/dev.py --dbdir /home/shared_ibeis/data/work/BABYMOM/ --web --port 5000
 ```  
 *Any images you upload will now go inside the above directory.*
-After you execute the above steps a web instance is setup and you can access the web interface from https://pachy.cs.uic.edu:5001
+After you execute the above steps a web instance is setup and you can access the web interface from https://pachy.cs.uic.edu:5000
 
 ## Getting copy of a code to pachy:
 Clone this GIT repository to your machine and also your home directory on pachy. *Let the admin know if you are unable to clone.*  
-``git clone https://github.com/CompBioUIC/BabyZebras``  
+``git clone https://github.com/CompBioUIC/BabyZebras.git``
+``git checkout scraping_branch``
 You can directly make changes to the code on pachy and run it from there. 
 
 
