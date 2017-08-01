@@ -46,6 +46,27 @@ if __name__ == "__main__":
 
 ```
 
+## Scraping EXIF data from Flickr
+After downloading the images from Flickr and manually filtering the images manually to remove all junk images, we also need to download the metadata or `EXIF` information for each image. EXIF information means date when the image was taken, width-height of the image etc. 
+
+Create a file with list of images that you downloaded and filtered, save it with a name of your choice, say, `imageList.dat`. Create a new file and save it in the folder where you `SocialMediaExtracts.py` exists with the below snippet. 
+
+```python 
+import SocialMediaImageExtracts as SE
+
+def __main__():
+    configDict = SE.xml_parser()
+    
+    flickrObj = config_dict["flickr_api_key_file"]
+    
+    with open("imageList.dat", "r") as fl:
+        fileList = fl.read().split("\n")
+        
+    getExif(flickrObj, <name of output file>.json, fileList = fileList) 
+```
+
+This script will give you a JSON file specified as `"<name of the output file>.json"`, we will be using this in the future for population estimation.
+
 ## Scraping images from Bing
 Similar to what we did for Flickr scrapes, a file with name of your choice and paste the below snippet. 
 ```python
@@ -67,6 +88,31 @@ if __name__ == "__main__":
 
 ```
 
+## Combining JSONs outputted by the Bing scrape
+As you may have already observed, the bing scrape generated a bunch of JSON file in the form `../data/bing_img_exif_giraffe_*` (assuming you kept `<bing_exif_prefix prefix="../data/bing_img_exif_giraffe_"></bing_exif_prefix>` in the config file). 
+
+Below script can be used to combine multiple JSON file into a single JSON.
+Assume you have the below JSON files outputted by the bing scraping method.
+
+```
+../data/bing_img_exif_giraffe_150.json
+../data/bing_img_exif_giraffe_300.json
+../data/bing_img_exif_giraffe_450.json
+../data/bing_img_exif_giraffe_600.json
+```
+
+```python
+import DataStructsHelperAPI as DS, json
+
+def __main__():
+    combinedDict = DS.appendJSON(../data/bing_img_exif_giraffe_150.json,
+                                 ../data/bing_img_exif_giraffe_300.json,
+                                 ../data/bing_img_exif_giraffe_450.json,
+                                 ../data/bing_img_exif_giraffe_600.json)
+                                 
+    with open("../data/bing_img_exif_giraffe_cobined.json", "w") as fl:
+        json.dump(combinedDict, fl, indent=4)
+```
 
 ## Expected Errors
 The step of downloading is known to fail. We are using 2 processes to simulaneously download images and this can cause network congestion and the script might fail. 
