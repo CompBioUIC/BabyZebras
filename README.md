@@ -163,8 +163,8 @@ You can directly make changes to the code on pachy and run it from there.
 ## Uploading images to pachy
 The script UploadAndDetectIBEIS.py has all the required methods to upload images to pachy. 
 Steps to upload: 
-* Create a new script file locally on your computer with the below snippet:
-**The upload process using the below script will generate a JSON, make sure you save it. **
+* Create a new script file locally on your computer with the below snippet:  
+**The upload process using the below script will generate a JSON, make sure you save it.**
 ```python
 import UploadAndDetectIBEIS as UD
 import json
